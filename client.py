@@ -10,12 +10,10 @@ print('Open Port is {}'.format(open_port))
 print('Receiving frames...')
 
 hosts = {}
-# show streamed images
 while True:
     try:
         host_name, jpg_buffer = image_hub.recv_jpg()
 
-        # image is 1-d numpy.ndarray and decode to 3-d array
         image = np.frombuffer(jpg_buffer, dtype='uint8')
         image = cv2.imdecode(image, -1)
         width, height, channel = image.shape

@@ -1,0 +1,7 @@
+imutils==0.5.4
+numpy==1.23.1
+opencv-contrib-python==4.6.0.66
+packaging==21.3
+pyparsing==3.0.9
+pyzmq==23.2.0
+redis==4.3.4

@@ -1,6 +1,5 @@
 import cv2
 from socket_classes import socket_classes
-from imutils.video import WebcamVideoStream
 
 # Создаётся сокет отправления
 sender = socket_classes.ImageSender(
@@ -14,26 +13,17 @@ print('Connect the ImageSender object to {}:{}'.format(
     '5555')
 )
 
-# Создаётся объект записи видео с вебкамеры
-video_stream = WebcamVideoStream(src=0)
+# Создаётся объект считывания видео из файла
+video_stream = cv2.VideoCapture('video.mp4')
 
-video_stream.start()
-# камера включается около 2 секунд
-
-# frame = video_stream.read()
-#
-# print('Video Size is', frame.shape)
 print('Streaming frames to the server...')
-while True:
+while video_stream.isOpened():
     # читает какждый кадр и отправляет картинку на сервер
     try:
-        frame = video_stream.read()
-
-        rep, jpg_buffer = cv2.imencode(".jpg", frame)
-        if rep:
+        ret, frame = video_stream.read()
+        if ret:
+            rep, jpg_buffer = cv2.imencode(".jpg", frame)
             sender.send_jpg('host', jpg_buffer)
     except Exception as err:
         sender.reset_socket()
-        if video_stream.read() is None:
-            video_stream = WebcamVideoStream(src=0)
-            video_stream.start()
+        print(err)
