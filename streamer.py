@@ -19,10 +19,6 @@ video_stream = WebcamVideoStream(src=0)
 
 video_stream.start()
 # камера включается около 2 секунд
-
-# frame = video_stream.read()
-#
-# print('Video Size is', frame.shape)
 print('Streaming frames to the server...')
 while True:
     # читает какждый кадр и отправляет картинку на сервер
